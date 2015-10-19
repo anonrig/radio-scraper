@@ -1,0 +1,19 @@
+{
+  "name": "radioeksen-scraper",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.19.0",
+    "debug": "^2.2.0",
+    "lodash": "^3.10.1",
+    "pg": "^4.4.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.12.1"
+  }
+}
