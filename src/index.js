@@ -1,9 +1,11 @@
-var _ = require('lodash'),
-    debug = require('debug')('re:app');
+"use strict";
 
-var db = require('./lib/db'),
-    Observer = require('./lib/observer'),
-    models = require('./models');
+const _ = require('lodash');
+const debug = require('debug')('re:app');
+
+const db = require('./lib/db');
+const Observer = require('./lib/observer');
+const models = require('./models');
 
 
 /**
@@ -14,13 +16,13 @@ function boot() {
 
     db
         .sync()
-        .then(function() {
+        .then(() => {
             debug('Connected to db');
 
-            var observer = new Observer(60000, onSongChanged);
+            let observer = new Observer(60000, onSongChanged);
             observer.start();
         })
-        .catch(function(err) {
+        .catch((err) => {
             console.log('Could not boot!');
             console.log(err.stack);
             process.exit();

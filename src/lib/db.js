@@ -1,4 +1,6 @@
-var Sequelize = require('sequelize');
+"use strict";
+
+const Sequelize = require('sequelize');
 
 module.exports = new Sequelize('radioeksen', 'dgurkaynak', null, {
     host: 'localhost',

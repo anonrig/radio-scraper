@@ -1,11 +1,13 @@
-var Sequelize = require('sequelize'),
-    db = require('../lib/db');
+"use strict";
+
+const Sequelize = require('sequelize');
+const db = require('../lib/db');
 
 
 /**
  * Artist model
  */
-var Artist = db.define('Artist', {
+let Artist = db.define('Artist', {
     name: {
         type: Sequelize.STRING,
         allowNull: false,

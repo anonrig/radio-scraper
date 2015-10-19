@@ -1,13 +1,15 @@
-var Sequelize = require('sequelize'),
-    db = require('../lib/db');
+"use strict";
 
-var Artist = require('./artist');
+const Sequelize = require('sequelize');
+const db = require('../lib/db');
+
+const Artist = require('./artist');
 
 
 /**
  * Song model.
  */
-var Song = db.define('Song', {
+let Song = db.define('Song', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,

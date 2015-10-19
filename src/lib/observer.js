@@ -1,5 +1,7 @@
-var Fetcher = require('./fetcher'),
-    debug = require('debug')('re:lib:observer');
+"use strict";
+
+const Fetcher = require('./fetcher');
+const debug = require('debug')('re:lib:observer');
 
 
 /**
@@ -8,40 +10,41 @@ var Fetcher = require('./fetcher'),
  * @param {number} checkInterval In milliseconds.
  * @param {function(Object)} callback
  */
-var Observer = function(checkInterval, callback) {
-    this.current_ = null;
-    this.checkInterval_ = checkInterval;
-    this.interval_ = null;
-    this.callback_ = callback;
-};
+class Observer {
+    constructor(checkInterval, callback) {
+        this.current_ = null;
+        this.checkInterval_ = checkInterval;
+        this.interval_ = null;
+        this.callback_ = callback;
+    }
 
 
-/**
- * Starts watching.
- */
-Observer.prototype.start = function() {
-    this.interval_ = setInterval(this.check_.bind(this), this.checkInterval_);
-    this.check_();
-};
+    /**
+     * Starts watching.
+     */
+    start() {
+        this.interval_ = setInterval(this.check_.bind(this), this.checkInterval_);
+        this.check_();
+    }
 
 
-/**
- * Our atomic checker method.
- */
-Observer.prototype.check_ = function() {
-    var that = this,
-        previous = this.current_;
+    /**
+     * Our atomic checker method.
+     */
+    check_() {
+        let previous = this.current_;
 
-    Fetcher.fetch(function(err, song) {
-        if (err)
-            return debug('Cannot fetch, moving on...', err);
+        Fetcher.fetch((err, song) => {
+            if (err)
+                return debug('Cannot fetch, moving on...', err);
 
-        that.current_ = song.artist + song.title;
+            this.current_ = song.artist + song.title;
 
-        if (that.current_ != previous)
-            that.callback_(song);
-    });
-};
+            if (this.current_ != previous)
+                this.callback_(song);
+        });
+    }
+}
 
 
 module.exports = Observer;
