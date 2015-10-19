@@ -34,4 +34,11 @@ let Song = db.define('Song', {
 }, {});
 
 
+/**
+ * Define relations.
+ */
+Song.belongsTo(Artist, { as: 'Artist', foreignKey: 'artist' });
+Artist.hasMany(Song, { as: 'Songs', foreignKey: 'artist' });
+
+
 module.exports = Song;
