@@ -5,7 +5,6 @@ const debug = require('debug')('re:app');
 
 const db = require('./lib/db');
 const Observer = require('./lib/observer');
-const models = require('./models');
 
 
 /**

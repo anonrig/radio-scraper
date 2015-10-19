@@ -1,7 +1,7 @@
 "use strict";
 
 const Sequelize = require('sequelize');
-const db = require('../lib/db');
+const db = require('../../lib/db');
 
 
 /**

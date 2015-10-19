@@ -1,15 +1,15 @@
 "use strict";
 
 const Sequelize = require('sequelize');
-const db = require('../lib/db');
+const db = require('../../lib/db');
 
-const Artist = require('./artist');
+const Song = require('../song/model');
 
 
 /**
- * Song model.
+ * Record model
  */
-let Song = db.define('Song', {
+let Record = db.define('Record', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -17,21 +17,20 @@ let Song = db.define('Song', {
         unique: true,
         allowNull: false
     },
-    artist: {
-        type: Sequelize.STRING,
+    songId: {
+        type: Sequelize.INTEGER,
         references: {
-            model: Artist,
-            key: 'name',
+            model: Song,
+            key: 'id',
             deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
-        },
-        unique: 'artistTitle'
+        }
     },
-    title: {
-        type: Sequelize.STRING,
+    date: {
+        type: Sequelize.DATE,
         allowNull: false,
-        unique: 'artistTitle'
+        defaultValue: Sequelize.NOW
     }
 }, {});
 
 
-module.exports = Song;
+module.exports = Record;
