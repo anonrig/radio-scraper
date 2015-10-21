@@ -2,6 +2,7 @@
 
 const RadioEksenFetcher = require('./fetchers/radioeksen');
 const RadyoBabylonFetcher = require('./fetchers/radyobabylon');
+const MaxFMFetcher = require('./fetchers/maxfm');
 const debug = require('debug')('re:lib:observer');
 
 
@@ -25,6 +26,9 @@ class Observer {
                 break;
             case 'radyobabylon':
                 this.fetcher = RadyoBabylonFetcher;
+                break;
+            case 'maxfm':
+                this.fetcher = MaxFMFetcher;
                 break;
         }
     }
