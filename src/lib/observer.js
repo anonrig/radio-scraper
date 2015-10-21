@@ -1,6 +1,7 @@
 "use strict";
 
 const RadioEksenFetcher = require('./fetchers/radioeksen');
+const RadyoBabylonFetcher = require('./fetchers/radyobabylon');
 const debug = require('debug')('re:lib:observer');
 
 
@@ -21,6 +22,9 @@ class Observer {
         switch (process.env.NODE_ENV) {
             case 'radioeksen':
                 this.fetcher = RadioEksenFetcher;
+                break;
+            case 'radyobabylon':
+                this.fetcher = RadyoBabylonFetcher;
                 break;
         }
     }
