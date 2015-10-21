@@ -1,6 +1,6 @@
 "use strict";
 
-const Fetcher = require('./fetcher');
+const RadioEksenFetcher = require('./fetchers/radioeksen');
 const debug = require('debug')('re:lib:observer');
 
 
@@ -16,6 +16,13 @@ class Observer {
         this.checkInterval_ = checkInterval;
         this.interval_ = null;
         this.callback_ = callback;
+        this.fetcher = null;
+
+        switch (process.env.NODE_ENV) {
+            case 'radioeksen':
+                this.fetcher = RadioEksenFetcher;
+                break;
+        }
     }
 
 
@@ -34,7 +41,7 @@ class Observer {
     check_() {
         let previous = this.current_;
 
-        Fetcher.fetch((err, song) => {
+        this.fetcher.fetch((err, song) => {
             if (err)
                 return debug('Cannot fetch, moving on...', err);
 

@@ -2,13 +2,13 @@
 
 const cheerio = require('cheerio');
 const exec = require('child_process').exec;
-const debug = require('debug')('re:lib:fetcher');
+const debug = require('debug')('re:lib:fetchers:radioeksen');
 
 
 /**
  * The Fetcher.
  */
-class Fetcher {
+class RadioEksenFetcher {
     /**
      * Runs `curl http://live.radioeksen.com/`, reads #playingSong element
      * and finally gets currently playing song and its artist. Don't ask me why
@@ -51,4 +51,4 @@ class Fetcher {
 }
 
 
-module.exports = Fetcher;
+module.exports = RadioEksenFetcher;
