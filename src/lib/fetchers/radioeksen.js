@@ -19,33 +19,31 @@ class RadioEksenFetcher {
      * the first parameter and the data is second.
      */
     static fetch(callback) {
-        exec('curl http://live.radioeksen.com/', (err, stdout, stderr) => {
+        exec('curl http://radioeksen.com/Json/GetCurrentSong', (err, stdout, stderr) => {
             if (err) {
-                debug('Cannot curl live.radioeksen.com', err);
+                debug('Cannot curl http://radioeksen.com/Json/GetCurrentSong', err);
                 return callback(err);
             }
 
-            let $ = cheerio.load(stdout);
-            let playingSongText = $('#playingSong').text() || '';
-            let playingSongLines = playingSongText.split('\n');
+            const rawResult = typeof stdout == 'string' ? stdout.trim() : null;
 
-            if (!playingSongLines[4]) {
-                debug('Not supported #playingSong.text()', playingSongText);
-                return callback('Not found the song text');
+            if (!rawResult)
+                return callback('Empty result');
+
+            try {
+                const result = JSON.parse(rawResult);
+
+                if (!result.Artist || !result.TrackName)
+                    return callback('Empty artist or track');
+
+                callback(null, {
+                    artist: result.Artist,
+                    title: result.TrackName
+                });
+            } catch (err) {
+                console.log('Could not parse json', rawResult);
+                callback('Could not parse json');
             }
-
-            let playingSong = playingSongLines[4];
-            let playingSongArr = playingSong.split('-');
-
-            if (playingSongArr.length == 1) {
-                debug('Unrecognized song format', playingSongLines);
-                return callback('Wrong song format');
-            }
-
-            let artist = playingSongArr[0].trim();
-            let title = playingSongArr[1].trim();
-
-            callback(null, { artist, title });
         });
     }
 }
