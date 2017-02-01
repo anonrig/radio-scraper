@@ -10,7 +10,7 @@ const debug = require('debug')('re:lib:fetchers:radyobabylon');
  */
 class RadyoBabylonFetcher {
     /**
-     * Runs `curl http://pozitiflive.com/tr`, reads `.radio-song-artist` and
+     * Runs `curl http://babylon.com.tr/tr/`, reads `.radio-song-artist` and
      * `.radio-song-title` elements and finally gets currently playing song
      * and its artist.
      *
@@ -18,18 +18,18 @@ class RadyoBabylonFetcher {
      * the first parameter and the data is second.
      */
     static fetch(callback) {
-        exec(' curl http://pozitiflive.com/tr', (err, stdout, stderr) => {
+        exec(' curl http://babylon.com.tr/tr/', (err, stdout, stderr) => {
             if (err) {
-                debug('Cannot curl pozitiflive.com', err);
+                debug('Cannot curl babylon.com.tr', err);
                 return callback(err);
             }
 
             let $ = cheerio.load(stdout);
-            let artist = $('.radio-song-artist div').text() || '';
-            let title = $('.radio-song-title div').text() || '';
+            let artist = $('.track-name .marquee-content').text() || '';
+            let title = $('.artist-name .marquee-content').text() || '';
 
             if (!artist || !title) {
-                debug('Not fount artist or title', $('.radio-player').text());
+                debug('Not fount artist or title', $('#mrp-radyo-babylon').text());
                 return callback('Not fount artist or title');
             }
 
